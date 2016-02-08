@@ -82,6 +82,7 @@ source=("ftp://www.kernel.org/pub/linux/kernel/v${_major}.x/linux-${_basekernel}
 	'config' 'config.x86_64'		# the main kernel config files
 	'linux.preset'			        # standard config files for mkinitcpio ramdisk
 	'change-default-console-loglevel.patch'
+	'ubuntu-unprivileged-overlayfs.patch'
 	"${_pfpatchhome}${_pfpatchname}.xz"	# the -pf patchset
         "git+$_aufs3#branch=aufs4.4"
 	'0001-sdhci-revert.patch'
@@ -94,33 +95,8 @@ prepare() {
   cd "${srcdir}/linux-${_basekernel}"
   msg "Applying pf-kernel patch"
   patch -Np1 < ${srcdir}/${_pfpatchname}
-  msg "applying aufs3 patches"
-  cd "$srcdir/${_aufs3##*/}"
-#  git checkout origin/aufs${_basekernel} || _aufs3checkout=KRAKRA
-  if [[ ${_aufs3checkout} = "KRAKRA" ]]; then
-      echo
-      msg "AUFS3 not yet ported to version ${_basekernel}!"
-      msg "Skipping related patches."
-      echo
-      cd ..
-  else
-    #        mkdir -p "${pkgdir}/usr/lib/modules/build/${_kernver}/include"
-    #        mv include/linux/Kbuild "${pkgdir}/usr/lib/modules/build/${_kernver}/include/"
-    rm include/uapi/linux/Kbuild
-    cp -a {Documentation,fs,include} ${srcdir}/linux-${_basekernel}/
-    cd ../linux-${_basekernel}
-    msg "Patching aufs3"
-    for _patch in ${srcdir}/${_aufs3##*/}/*.patch; do
-      patch -Np1 -i ${_patch} || _aufs3fail=KRAKRA
-    done
-    if [[ ${_aufs3fail} = "KRAKRA" ]]; then
-	echo
-    	warning "Not all aufs3 patches applied correctly. Ignore this if you won't use AUFS."
-    	warning "Otherwise, press CTRL-C now and fix manually"
-	warning "Remind me to enable it again if it's aviable again"
-    	echo
-    fi
-  fi
+
+  patch -Np1 -i "${srcdir}/ubuntu-unprivileged-overlayfs.patch"
   
   # Interactive governor patch
   # broken for now
