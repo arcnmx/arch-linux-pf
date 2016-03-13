@@ -10,7 +10,7 @@ _minor=4
 _basekernel=${_major}.${_minor}
 _srcname=linux-${_major}.${_minor}
 pkgbase=linux-pf
-_pfrel=5
+_pfrel=6
 _kernelname=-pf
 _pfpatchhome="http://pf.natalenko.name/sources/${_basekernel}/"
 _pfpatchname="patch-${_basekernel}${_kernelname}${_pfrel}"
@@ -84,8 +84,6 @@ source=("ftp://www.kernel.org/pub/linux/kernel/v${_major}.x/linux-${_basekernel}
 	'ubuntu-unprivileged-overlayfs.patch'
 	"${_pfpatchhome}${_pfpatchname}.xz"	# the -pf patchset
 	'0001-sdhci-revert.patch'
-       '0001-4.4-revert-btrfs.patch'
-        '0001-4.4-revert-xfs.patch'
        )
 # 	'cx23885_move_CI_AC_registration_to_a_separate_function.patch'     
 
@@ -112,9 +110,6 @@ prepare() {
   # https://bugzilla.kernel.org/show_bug.cgi?id=106541
   patch -Rp1 -i "${srcdir}/0001-sdhci-revert.patch"
 
-  # #47757 fix broken suspend from btrfs and xfs
-  patch -Np1 -i "${srcdir}/0001-4.4-revert-xfs.patch"
-  patch -Np1 -i "${srcdir}/0001-4.4-revert-btrfs.patch"
   
   # set DEFAULT_CONSOLE_LOGLEVEL to 4 (same value as the 'quiet' kernel param)
   # remove this when a Kconfig knob is made available by upstream
@@ -677,13 +672,19 @@ package_linux-pf-headers() {
 pkgdesc="Linux kernel and modules with the pf-kernel patch [-ck patchset (BFS included), TuxOnIce, BFQ]"
 
 # makepkg -g >>PKGBUILD
+md5sums=('9a78fa2eb6c68ca5a40ed5af08142599'
+         'a195c5a35dcd02dcedb7a203ed8271ce'
+         '25db5a1a0e751b6bb8b4f2dbceeb35fa'
+         '408a033f1332317f312617704edf9f75'
+         'df7fceae6ee5d7e7be7b60ecd7f6bb35'
+         '6ad1a637517c603fc45814e1f8d8b057'
+         '3649bc40e2300e573e225e6e07b755b3'
+         'e1093d9bc718f362344ab56b85d4fb76')
 sha256sums=('401d7c8fef594999a460d10c72c5a94e9c2e1022f16795ec51746b0d165418b2'
-            '9723aaf2fc695670102574b6e38fe0736c34edc8413b05a5ff517e5542b654e6'
-            'a7e1b0c12b4d608497eb8b83175a3897b4cff70db7546695f00b3484b9541a83'
+            '1a06ef39f1e6e2751d123fc3cdcfefe8a0cb6c134ba7fa1edb0a165f77468fea'
+            'f2654ba1c8bceca3e5417e4a1fe6836c283c3354f49eca72a4ec09e753de1fd7'
             '82d660caa11db0cd34fd550a049d7296b4a9dcd28f2a50c81418066d6e598864'
             '1256b241cd477b265a3c2d64bdc19ffe3c9bbcee82ea3994c590c2c76e767d99'
             '01a6d59a55df1040127ced0412f44313b65356e3c680980210593ee43f2495aa'
-            'c1edc12b4484834fb59707cf68cd4e5d4fb75ec5e05545bef36e085ee5ddbed2'
-            '5313df7cb5b4d005422bd4cd0dae956b2dadba8f3db904275aaf99ac53894375'
-            '51586b733e9f178bebe577258b6057b035eded516ffe8bf8bbb26cb0b26c4958'
-            'ffbfaa192d17bfc7c6293aa9a07efe57f65177051ae3d8033d5e45a7bca2e0ad')
+            '091d35a9a13afa7da4d704dd0094294e15c451791136f8c0c3685aaae24b7d17'
+            '5313df7cb5b4d005422bd4cd0dae956b2dadba8f3db904275aaf99ac53894375')
