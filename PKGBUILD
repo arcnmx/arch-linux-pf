@@ -14,7 +14,6 @@ _pfrel=5
 _kernelname=-pf
 _pfpatchhome="http://pf.natalenko.name/sources/${_basekernel}/"
 _pfpatchname="patch-${_basekernel}${_kernelname}${_pfrel}"
-_aufs3="https://github.com/sfjro/aufs4-standalone"
 _CPUSUFFIXES_KBUILD=(
   CORE2 K7 K8 K10 BARCELONA BOBCAT BULLDOZER PILEDRIVER PSC
   ATOM PENTIUMII PENTIUMIII PENTIUMM PENTIUM4 NEHALEM SANDYBRIDGE
@@ -84,7 +83,6 @@ source=("ftp://www.kernel.org/pub/linux/kernel/v${_major}.x/linux-${_basekernel}
 	'change-default-console-loglevel.patch'
 	'ubuntu-unprivileged-overlayfs.patch'
 	"${_pfpatchhome}${_pfpatchname}.xz"	# the -pf patchset
-        "git+$_aufs3#branch=aufs4.4"
 	'0001-sdhci-revert.patch'
        '0001-4.4-revert-btrfs.patch'
         '0001-4.4-revert-xfs.patch'
@@ -320,7 +318,7 @@ build() {
 }
 
 package_linux-pf() {
- _pkgdesc="Linux kernel and modules with the pf-kernel patch [-ck patchset (BFS included), TuxOnIce, BFQ] and aufs3."
+ _pkgdesc="Linux kernel and modules with the pf-kernel patch [-ck patchset (BFS included), TuxOnIce, BFQ]"
  pkgdesc=${_pkgdesc}
  groups=('base')
  backup=(etc/mkinitcpio.d/${pkgbase}.preset)
@@ -333,24 +331,21 @@ package_linux-pf() {
 	    'nvidia-pf: NVIDIA drivers for linux-pf'
 	    'nvidia-beta-all: NVIDIA drivers for all installed kernels'
 	    'modprobed_db: Keeps track of EVERY kernel module that has ever been probed. Useful for make localmodconfig.')
- #provides=(${pkgbase}=${_basekernel} 'aufs3')	# for $pkgname-optimized
- provides=(${pkgbase}=${_basekernel} 'aufs3')
+ #provides=(${pkgbase}=${_basekernel})	# for $pkgname-optimized
+ provides=(${pkgbase}=${_basekernel})
  # below 'provides' is for when you have no other kernel (which is a bad idea anyway)
- # provides=(${pkgbase}=${_basekernel} 'linux=${pkgver}' 'aufs3')
+ # provides=(${pkgbase}=${_basekernel} 'linux=${pkgver}')
  # If generic build, then conflict with all optimized ones
  conflicts=()
  for _cpusuffix in $_CPUSUFFIXES ; do
    conflicts+=(${pkgbase}-${_cpusuffix}) 
  done  
- replaces=('kernel26-pf' 'aufs3')
+ replaces=('kernel26-pf')
  backup=("etc/mkinitcpio.d/${pkgbase}.preset")
  install='linux.install'
 
  #'
   cd "${srcdir}/linux-${_basekernel}"
-
-  # Remove undeeded aufs3 git tree
-  rm -fr aufs3 2>/dev/null
 
   # work around the AUR parser
   # This allows building cpu-optimized packages with according package names.
@@ -442,7 +437,7 @@ package_linux-pf() {
      default)
   # Note to me: DO NOT EVER REMOVE THIS. It's for the AUR PKGBUILD parser.
          pkgname="${pkgbase}"
-         pkgdesc="Linux kernel and modules with the pf-kernel patch [-ck patchset (BFS included), TuxOnIce, BFQ] and aufs3"
+         pkgdesc="Linux kernel and modules with the pf-kernel patch [-ck patchset (BFS included), TuxOnIce, BFQ]"
          ;;
     esac
 
@@ -679,16 +674,16 @@ package_linux-pf-headers() {
 }
 
 # Work around the AUR parser
-pkgdesc="Linux kernel and modules with the pf-kernel patch [-ck patchset (BFS included), TuxOnIce, BFQ] and aufs3"
+pkgdesc="Linux kernel and modules with the pf-kernel patch [-ck patchset (BFS included), TuxOnIce, BFQ]"
 
 # makepkg -g >>PKGBUILD
 sha256sums=('401d7c8fef594999a460d10c72c5a94e9c2e1022f16795ec51746b0d165418b2'
             '9723aaf2fc695670102574b6e38fe0736c34edc8413b05a5ff517e5542b654e6'
-            'affcfe37189534a75f766a1ba2d334fefdfb57538feca5144db64309de0f7515'
+            'a7e1b0c12b4d608497eb8b83175a3897b4cff70db7546695f00b3484b9541a83'
             '82d660caa11db0cd34fd550a049d7296b4a9dcd28f2a50c81418066d6e598864'
             '1256b241cd477b265a3c2d64bdc19ffe3c9bbcee82ea3994c590c2c76e767d99'
+            '01a6d59a55df1040127ced0412f44313b65356e3c680980210593ee43f2495aa'
             'c1edc12b4484834fb59707cf68cd4e5d4fb75ec5e05545bef36e085ee5ddbed2'
-            'SKIP'
             '5313df7cb5b4d005422bd4cd0dae956b2dadba8f3db904275aaf99ac53894375'
             '51586b733e9f178bebe577258b6057b035eded516ffe8bf8bbb26cb0b26c4958'
             'ffbfaa192d17bfc7c6293aa9a07efe57f65177051ae3d8033d5e45a7bca2e0ad')
