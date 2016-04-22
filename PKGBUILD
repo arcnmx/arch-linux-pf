@@ -4,13 +4,13 @@
 # Some lines from  kernel26-bfs and kernel26-ck
 # Credits to respective maintainers
 _major=4
-_minor=4
+_minor=5
 #_patchlevel=0
 #_subversion=1
 _basekernel=${_major}.${_minor}
 _srcname=linux-${_major}.${_minor}
 pkgbase=linux-pf
-_pfrel=8
+_pfrel=1
 _kernelname=-pf
 _pfpatchhome="http://pf.natalenko.name/sources/${_basekernel}/"
 _pfpatchname="patch-${_basekernel}${_kernelname}${_pfrel}"
@@ -83,7 +83,6 @@ source=("ftp://www.kernel.org/pub/linux/kernel/v${_major}.x/linux-${_basekernel}
 	'change-default-console-loglevel.patch'
 	'ubuntu-unprivileged-overlayfs.patch'
 	"${_pfpatchhome}${_pfpatchname}.xz"	# the -pf patchset
-	'0001-sdhci-revert.patch'
        )
 # 	'cx23885_move_CI_AC_registration_to_a_separate_function.patch'     
 
@@ -105,11 +104,6 @@ prepare() {
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
   
-  # revert http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=9faac7b95ea4f9e83b7a914084cc81ef1632fd91
-  # fixes #47778 sdhci broken on some boards
-  # https://bugzilla.kernel.org/show_bug.cgi?id=106541
-  patch -Rp1 -i "${srcdir}/0001-sdhci-revert.patch"
-
   
   # set DEFAULT_CONSOLE_LOGLEVEL to 4 (same value as the 'quiet' kernel param)
   # remove this when a Kconfig knob is made available by upstream
@@ -672,19 +666,17 @@ package_linux-pf-headers() {
 pkgdesc="Linux kernel and modules with the pf-kernel patch [-ck patchset (BFS included), TuxOnIce, BFQ]"
 
 # makepkg -g >>PKGBUILD
-md5sums=('9a78fa2eb6c68ca5a40ed5af08142599'
-         'a2be4f0b33e0f68f9eac345c15a1f46d'
-         'c6d271380d6a556375c0cb04a1a3b924'
+md5sums=('a60d48eee08ec0536d5efb17ca819aef'
+         '3364704c6d11f48e421f341a1a5ab896'
+         '38da6d8d00ef671230cd1dc4581dabfe'
          '408a033f1332317f312617704edf9f75'
          'df7fceae6ee5d7e7be7b60ecd7f6bb35'
          '6ad1a637517c603fc45814e1f8d8b057'
-         '525547cbe7261a2bac9e0bd10cc05cea'
-         'e1093d9bc718f362344ab56b85d4fb76')
-sha256sums=('401d7c8fef594999a460d10c72c5a94e9c2e1022f16795ec51746b0d165418b2'
-            '15d9c10ede703dc06abd8ae9c68b4099637b32a27d2b2625eecd0ded317cec21'
-            '94a0fc3c42545faaacc98b716b676f3e4e705e40b4be62fd979254f25163593d'
+         'fe0dc67fee98cd778b25d1788451a8b9')
+sha256sums=('a40defb401e01b37d6b8c8ad5c1bbab665be6ac6310cdeed59950c96b31a519c'
+            '8a5f4074e3c2a476c97163349d234d578938c796cc42c8798e0ba30f4f27b7c1'
+            'a2111f2c64cde7304066251b1af975a9b5a53cce27bf109b1db97d0fc1d963c6'
             '82d660caa11db0cd34fd550a049d7296b4a9dcd28f2a50c81418066d6e598864'
             '1256b241cd477b265a3c2d64bdc19ffe3c9bbcee82ea3994c590c2c76e767d99'
             '01a6d59a55df1040127ced0412f44313b65356e3c680980210593ee43f2495aa'
-            '8c416ec05bbb1faf0730a805c44dc508e8892bbe43c7046000373f2d618dc94d'
-            '5313df7cb5b4d005422bd4cd0dae956b2dadba8f3db904275aaf99ac53894375')
+            '6dbf19c20f28bdb944b17196cd2649321ecfe62ac9e312df89add6fbc2499513')
