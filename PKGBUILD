@@ -10,7 +10,7 @@ _minor=5
 _basekernel=${_major}.${_minor}
 _srcname=linux-${_major}.${_minor}
 pkgbase=linux-pf
-_pfrel=1
+_pfrel=3
 _kernelname=-pf
 _pfpatchhome="http://pf.natalenko.name/sources/${_basekernel}/"
 _pfpatchname="patch-${_basekernel}${_kernelname}${_pfrel}"
@@ -672,11 +672,11 @@ md5sums=('a60d48eee08ec0536d5efb17ca819aef'
          '408a033f1332317f312617704edf9f75'
          'df7fceae6ee5d7e7be7b60ecd7f6bb35'
          '6ad1a637517c603fc45814e1f8d8b057'
-         'fe0dc67fee98cd778b25d1788451a8b9')
+         '44607ad08dbc10e6cdb979274b696c60')
 sha256sums=('a40defb401e01b37d6b8c8ad5c1bbab665be6ac6310cdeed59950c96b31a519c'
             '8a5f4074e3c2a476c97163349d234d578938c796cc42c8798e0ba30f4f27b7c1'
             'a2111f2c64cde7304066251b1af975a9b5a53cce27bf109b1db97d0fc1d963c6'
             '82d660caa11db0cd34fd550a049d7296b4a9dcd28f2a50c81418066d6e598864'
             '1256b241cd477b265a3c2d64bdc19ffe3c9bbcee82ea3994c590c2c76e767d99'
             '01a6d59a55df1040127ced0412f44313b65356e3c680980210593ee43f2495aa'
-            '6dbf19c20f28bdb944b17196cd2649321ecfe62ac9e312df89add6fbc2499513')
+            'a6797a18e8d344745512a1a32995d27f7f3b4f880fd143e445471da88d8bc23e')
