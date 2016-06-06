@@ -10,7 +10,7 @@ _minor=5
 _basekernel=${_major}.${_minor}
 _srcname=linux-${_major}.${_minor}
 pkgbase=linux-pf
-_pfrel=3
+_pfrel=4
 _kernelname=-pf
 _pfpatchhome="http://pf.natalenko.name/sources/${_basekernel}/"
 _pfpatchname="patch-${_basekernel}${_kernelname}${_pfrel}"
@@ -674,9 +674,23 @@ md5sums=('a60d48eee08ec0536d5efb17ca819aef'
          '6ad1a637517c603fc45814e1f8d8b057'
          '44607ad08dbc10e6cdb979274b696c60')
 sha256sums=('a40defb401e01b37d6b8c8ad5c1bbab665be6ac6310cdeed59950c96b31a519c'
-            '8a5f4074e3c2a476c97163349d234d578938c796cc42c8798e0ba30f4f27b7c1'
-            'a2111f2c64cde7304066251b1af975a9b5a53cce27bf109b1db97d0fc1d963c6'
+            '40955214cfe00b6dc217e9c517e0af07d90bfdb9e937238a4a569724a42c7e03'
+            '74f9b5717214b458aadd3cc7474d90a4bf0eb68f85813b3d8138b9285ea01b3b'
+            '82d660caa11db0cd34fd550a049d7296b4a9dcd28f2a50c81418066d6e598864'
+            '1256b241cd477b265a3c2d64bdc19ffe3c9bbcee82ea3994c590c2c76e767d99'
+            'd90f4d13bcbca5903b9a70ab653ac4446938961cc7b83b053824ed6afb557898'
+            'SKIP')
+md5sums=('a60d48eee08ec0536d5efb17ca819aef'
+         '926acbaa7cfb8a6deeffe828902c5e3a'
+         '599bd294db76caa5ba7d622a4dc02de5'
+         '408a033f1332317f312617704edf9f75'
+         'df7fceae6ee5d7e7be7b60ecd7f6bb35'
+         '6ad1a637517c603fc45814e1f8d8b057'
+         '03d1a22f8f9ea88dfdcfa350cabd389b')
+sha256sums=('a40defb401e01b37d6b8c8ad5c1bbab665be6ac6310cdeed59950c96b31a519c'
+            '40955214cfe00b6dc217e9c517e0af07d90bfdb9e937238a4a569724a42c7e03'
+            '8aff25ecf5cf3a118f4d84db68ead5a053ff2faf1f3f60521be40da821e6429b'
             '82d660caa11db0cd34fd550a049d7296b4a9dcd28f2a50c81418066d6e598864'
             '1256b241cd477b265a3c2d64bdc19ffe3c9bbcee82ea3994c590c2c76e767d99'
             '01a6d59a55df1040127ced0412f44313b65356e3c680980210593ee43f2495aa'
-            'a6797a18e8d344745512a1a32995d27f7f3b4f880fd143e445471da88d8bc23e')
+            'd90f4d13bcbca5903b9a70ab653ac4446938961cc7b83b053824ed6afb557898')
