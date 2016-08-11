@@ -4,7 +4,7 @@
 # Some lines from  kernel26-bfs and kernel26-ck
 # Credits to respective maintainers
 _major=4
-_minor=6
+_minor=7
 #_patchlevel=0
 #_subversion=1
 _basekernel=${_major}.${_minor}
@@ -83,8 +83,7 @@ source=("ftp://www.kernel.org/pub/linux/kernel/v${_major}.x/linux-${_basekernel}
 	'change-default-console-loglevel.patch'
 	'ubuntu-unprivileged-overlayfs.patch'
 	"${_pfpatchhome}${_pfpatchname}.xz"	# the -pf patchset
-        'https://raw.githubusercontent.com/dolohow/uksm/master/uksm-4.6.patch'
-        '0001-linux-4.6-rtlwifi-fix-atomic.patch'
+        "https://raw.githubusercontent.com/dolohow/uksm/master/uksm-$_major.$_minor.patch"
        )
 # 	'cx23885_move_CI_AC_registration_to_a_separate_function.patch'     
 
@@ -112,10 +111,6 @@ prepare() {
   # (relevant patch sent upstream: https://lkml.org/lkml/2011/7/26/227)
   patch -Np1 -i "${srcdir}/change-default-console-loglevel.patch"
 
-  # fix rtlwifi atomic
-  # https://bugs.archlinux.org/task/49401
-  patch -p1 -i "${srcdir}/0001-linux-4.6-rtlwifi-fix-atomic.patch"
-
   # end linux-ARCH patches
 
 
@@ -126,7 +121,7 @@ prepare() {
   #patch -Rp1 -i "${srcdir}/cx23885_move_CI_AC_registration_to_a_separate_function.patch" || true
 
   # since linux-pf-4.6 uksm is seperate
-  patch -Np1 -i "$srcdir"/uksm-4.6.patch
+  patch -Np1 -i "$srcdir"/uksm-$_major.$_minor.patch
   
   if [ "$CARCH" = "x86_64" ]; then
 	cat "${startdir}/config.x86_64" >| .config
@@ -675,21 +670,11 @@ package_linux-pf-headers() {
 pkgdesc="Linux kernel and modules with the pf-kernel patch [-ck patchset (BFS included), TuxOnIce, BFQ] and uksm"
 
 # makepkg -g >>PKGBUILD
-md5sums=('d2927020e24a76da4ab482a8bc3e9ef3'
-         '76e6629fb024bc331c4b50fe3bbde21c'
-         '414ea69b3661b96d03d0d822f4b9a96f'
-         '408a033f1332317f312617704edf9f75'
-         'df7fceae6ee5d7e7be7b60ecd7f6bb35'
-         '6ad1a637517c603fc45814e1f8d8b057'
-         '560a2a7085f266f2cad4a0347f9b1ebc'
-         '2a68808a90d6648b9d2a1a77ca007411'
-         '5667d6094013a3044aefa6e8edcfca08')
-sha256sums=('a93771cd5a8ad27798f22e9240538dfea48d3a2bf2a6a6ab415de3f02d25d866'
-            '606824b2b5bee79f1ae18b2946a4ef896b49d1015c4aba37676829ecc1a0e2ba'
-            'c2babeac265bb4c54c442a0e0fb333ce28930937dc31cbc554dc9a29a75e5a94'
+sha256sums=('5190c3d1209aeda04168145bf50569dc0984f80467159b1dc50ad731e3285f10'
+            '1480709d8b57bdcaebd54f83448b684203670341bc0cfccba1bdd089f250b373'
+            'a434184c829bd45e4f9e32758e818ddbc1359b65e97700f0e938949c2f349ff1'
             '82d660caa11db0cd34fd550a049d7296b4a9dcd28f2a50c81418066d6e598864'
             '1256b241cd477b265a3c2d64bdc19ffe3c9bbcee82ea3994c590c2c76e767d99'
             '01a6d59a55df1040127ced0412f44313b65356e3c680980210593ee43f2495aa'
-            '322f524f6bb828903f352efc3f2602eb8caf2278aabbb4bb754bbc030d3f66c2'
-            '83b450df0f2350f0539f515203b3be7ecf59b93c94016930c601745f86a871be'
-            'ae0d16e81a915fae130125ba9d0b6fd2427e06f50b8b9514abc4029efe61ee98')
+            '7bddfa90731de5f40fdb9354ea7f414313bb4a84dcd6f02bb70c3d0f59dccd3c'
+            '16f601b5b5d1d74230403eaf331f716c65f0b36b9b5a37cdcdf51c30ea19e341')
