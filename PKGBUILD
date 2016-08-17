@@ -17,10 +17,10 @@ _pfpatchname="patch-${_basekernel}${_kernelname}${_pfrel}"
 _CPUSUFFIXES_KBUILD=(
   CORE2 K7 K8 K10 BARCELONA BOBCAT BULLDOZER PILEDRIVER PSC
   ATOM PENTIUMII PENTIUMIII PENTIUMM PENTIUM4 NEHALEM SANDYBRIDGE
-  IVYBRIDGE HASWELL BROADWELL SILVERMONT)
+  IVYBRIDGE HASWELL BROADWELL SILVERMONT SKYLAKE)
 _CPUSUFFIXES=( core2 k7 k8 k10 barcelona bobcat
 	       bulldozer piledriver psc atom p2 p3 pm p4
-	       nehalem sandybridge ivybridge haswell broadwell silvermont)
+	       nehalem sandybridge ivybridge haswell broadwell silvermont skylake)
 
 ### PATCH AND BUILD OPTIONS
 #
@@ -71,7 +71,7 @@ _BATCH_MODE=n
 pkgname=('linux-pf')
 true && pkgname=('linux-pf' 'linux-pf-headers')
 pkgver=${_basekernel}.${_pfrel}
-pkgrel=1
+pkgrel=2
 arch=('i686' 'x86_64')
 url="http://pf.natalenko.name/"
 license=('GPL2')
@@ -427,8 +427,12 @@ package_linux-pf() {
          pkgname="${pkgbase}-silvermont"
          pkgdesc="${_pkgdesc} 6th Gen Core processors including Silvermont."
 	 ;;
+     SKYLAKE)
+       pkgname="${pkgbase}-skylake"
+       pkgdesc="${_pkgdesc} 6th Gen Core processors including Skylake."
+       ;;
      default)
-  # Note to me: DO NOT EVER REMOVE THIS. It's for the AUR PKGBUILD parser.
+       # Note to me: DO NOT EVER REMOVE THIS. It's for the AUR PKGBUILD parser.
          pkgname="${pkgbase}"
          pkgdesc="Linux kernel and modules with the pf-kernel patch [-ck patchset (BFS included), TuxOnIce, BFQ]"
          ;;
@@ -671,8 +675,8 @@ pkgdesc="Linux kernel and modules with the pf-kernel patch [-ck patchset (BFS in
 
 # makepkg -g >>PKGBUILD
 sha256sums=('5190c3d1209aeda04168145bf50569dc0984f80467159b1dc50ad731e3285f10'
-            '1480709d8b57bdcaebd54f83448b684203670341bc0cfccba1bdd089f250b373'
-            'a434184c829bd45e4f9e32758e818ddbc1359b65e97700f0e938949c2f349ff1'
+            'f935f7a8c796d1d08dbf34d4647ef914776d07b7829eaf6d6eebf5db6016cd90'
+            '794ddc5347f6e739cc95a8c078bb0ea4e3e7a57baa364476613cded19becff62'
             '82d660caa11db0cd34fd550a049d7296b4a9dcd28f2a50c81418066d6e598864'
             '1256b241cd477b265a3c2d64bdc19ffe3c9bbcee82ea3994c590c2c76e767d99'
             '01a6d59a55df1040127ced0412f44313b65356e3c680980210593ee43f2495aa'
