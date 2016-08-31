@@ -1,7 +1,7 @@
 pkgbase = linux-pf
 	pkgdesc = Linux kernel and modules with the pf-kernel patch [-ck patchset (BFS included), TuxOnIce, BFQ] and uksm
-	pkgver = 4.7.1
-	pkgrel = 2
+	pkgver = 4.7.2
+	pkgrel = 1
 	url = http://pf.natalenko.name/
 	arch = i686
 	arch = x86_64
@@ -19,20 +19,19 @@ pkgbase = linux-pf
 	source = linux.preset
 	source = change-default-console-loglevel.patch
 	source = ubuntu-unprivileged-overlayfs.patch
-	source = http://pf.natalenko.name/sources/4.7/patch-4.7-pf1.xz
+	source = http://pf.natalenko.name/sources/4.7/patch-4.7-pf2.xz
 	source = https://raw.githubusercontent.com/dolohow/uksm/master/uksm-4.7.patch
 	sha256sums = 5190c3d1209aeda04168145bf50569dc0984f80467159b1dc50ad731e3285f10
-	sha256sums = f935f7a8c796d1d08dbf34d4647ef914776d07b7829eaf6d6eebf5db6016cd90
-	sha256sums = 794ddc5347f6e739cc95a8c078bb0ea4e3e7a57baa364476613cded19becff62
+	sha256sums = eab02de671adbcb606b4ba6b713e9b999116257baf53dd33d8e1c79a934a9d0c
+	sha256sums = 320c34cea238a4a003a919ba24d62498c1ed6d51e87156792530213d933cbd95
 	sha256sums = 82d660caa11db0cd34fd550a049d7296b4a9dcd28f2a50c81418066d6e598864
 	sha256sums = 1256b241cd477b265a3c2d64bdc19ffe3c9bbcee82ea3994c590c2c76e767d99
 	sha256sums = 01a6d59a55df1040127ced0412f44313b65356e3c680980210593ee43f2495aa
-	sha256sums = 7bddfa90731de5f40fdb9354ea7f414313bb4a84dcd6f02bb70c3d0f59dccd3c
+	sha256sums = SKIP
 	sha256sums = 16f601b5b5d1d74230403eaf331f716c65f0b36b9b5a37cdcdf51c30ea19e341
 
 pkgname = linux-pf
 	pkgdesc = Linux kernel and modules with the pf-kernel patch [-ck patchset (BFS included), TuxOnIce, BFQ]
-	install = linux.install
 	groups = base
 	depends = coreutils
 	depends = linux-firmware
@@ -45,16 +44,22 @@ pkgname = linux-pf
 	optdepends = hibernate-script: set of scripts for managing TuxOnIce, hibernation and suspend to RAM
 	optdepends = nvidia-pf: NVIDIA drivers for linux-pf
 	optdepends = nvidia-beta-all: NVIDIA drivers for all installed kernels
-	optdepends = modprobed_db: Keeps track of EVERY kernel module that has ever been probed. Useful for make localmodconfig.
+	optdepends = modprobed-db: Keeps track of EVERY kernel module that has ever been probed. Useful for make localmodconfig.
 	provides = linux-pf=4.7
 	conflicts = linux-pf
 	conflicts = kernel26-pf
 	replaces = kernel26-pf
-	backup = etc/mkinitcpio.d/linux-pf.preset
 
 pkgname = linux-pf-headers
 	pkgdesc = Header files and scripts for building modules for linux-pf kernel.
 	depends = linux-pf
 	provides = linux-pf-headers
 	conflicts = linux-pf-headers-
+
+pkgname = linux-pf-preset-default
+	pkgdesc = Linux-pf default preset
+	install = linux.install
+	depends = linux-pf=4.7.2
+	provides = linux-pf-preset=4.7.2
+	backup = etc/mkinitcpio.d/linux-pf.preset
 

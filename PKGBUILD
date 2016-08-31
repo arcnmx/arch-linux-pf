@@ -10,7 +10,7 @@ _minor=7
 _basekernel=${_major}.${_minor}
 _srcname=linux-${_major}.${_minor}
 pkgbase=linux-pf
-_pfrel=1
+_pfrel=2
 _kernelname=-pf
 _pfpatchhome="http://pf.natalenko.name/sources/${_basekernel}/"
 _pfpatchname="patch-${_basekernel}${_kernelname}${_pfrel}"
@@ -69,9 +69,9 @@ _BATCH_MODE=n
 # see, https://bugs.archlinux.org/task/31187
 
 pkgname=('linux-pf')
-true && pkgname=('linux-pf' 'linux-pf-headers')
+true && pkgname=('linux-pf' 'linux-pf-headers' 'linux-pf-preset-default')
 pkgver=${_basekernel}.${_pfrel}
-pkgrel=2
+pkgrel=1
 arch=('i686' 'x86_64')
 url="http://pf.natalenko.name/"
 license=('GPL2')
@@ -205,10 +205,10 @@ build() {
 	    else
 	      msg "You kernel was not compiled with IKCONFIG_PROC."
 	      msg "Attempting to run /usr/bin/modprobed_db recall from modprobe_db..."
-	      if [ -e /usr/bin/modprobed_db ]; then
-	          sudo /usr/bin/modprobed_db recall
+	      if [ -e /usr/bin/modprobed-db ]; then
+	          sudo /usr/bin/modprobed-db recall
 	      else
-	        msg "modprobed_db not installed, running make localmodconfig instead..."
+	        msg "modprobed-db not installed, running make localmodconfig instead..."
 	        make localmodconfig
 	      fi
             fi
@@ -216,8 +216,8 @@ build() {
       elif [[ "$answer" = "l" ]]; then
           # Copied from kernel26-ck's PKGBUILD
           msg "Attempting to run /usr/bin/reload_database with sudo from modprobe_db..."
-          if [ -e /usr/bin/modprobed_db ]; then
-	      sudo /usr/bin/modprobed_db recall
+          if [ -e /usr/bin/modprobed-db ]; then
+	      sudo /usr/bin/modprobed-db recall
           fi
           msg "Running 'make localmodconfig'..."
           make localmodconfig
@@ -314,7 +314,6 @@ package_linux-pf() {
  _pkgdesc="Linux kernel and modules with the pf-kernel patch [-ck patchset (BFS included), TuxOnIce, BFQ] and uksm"
  pkgdesc=${_pkgdesc}
  groups=('base')
- backup=(etc/mkinitcpio.d/${pkgbase}.preset)
  depends=('coreutils' 'linux-firmware' 'kmod>=9-2' 'mkinitcpio>=0.7')
  optdepends=('linux-docs: Kernel hackers manual - HTML documentation that comes with the Linux kernel.'
 	    'crda: to set the correct wireless channels of your country'
@@ -323,7 +322,7 @@ package_linux-pf() {
 	    'hibernate-script: set of scripts for managing TuxOnIce, hibernation and suspend to RAM'
 	    'nvidia-pf: NVIDIA drivers for linux-pf'
 	    'nvidia-beta-all: NVIDIA drivers for all installed kernels'
-	    'modprobed_db: Keeps track of EVERY kernel module that has ever been probed. Useful for make localmodconfig.')
+	    'modprobed-db: Keeps track of EVERY kernel module that has ever been probed. Useful for make localmodconfig.')
  #provides=(${pkgbase}=${_basekernel})	# for $pkgname-optimized
  provides=(${pkgbase}=${_basekernel})
  # below 'provides' is for when you have no other kernel (which is a bad idea anyway)
@@ -334,8 +333,6 @@ package_linux-pf() {
    conflicts+=(${pkgbase}-${_cpusuffix}) 
  done  
  replaces=('kernel26-pf')
- backup=("etc/mkinitcpio.d/${pkgbase}.preset")
- install='linux.install'
 
  #'
   cd "${srcdir}/linux-${_basekernel}"
@@ -488,20 +485,7 @@ package_linux-pf() {
   cp arch/$KARCH/boot/bzImage "${pkgdir}/boot/vmlinuz-${pkgbase}"
 
 
-  # install fallback mkinitcpio.conf file and preset file for kernel
-  install -D -m644 "${srcdir}/linux.preset" "${pkgdir}/etc/mkinitcpio.d/${pkgbase}.preset"
 
-  # set correct depmod command for install
-  #sed \
-  #  -e  "s/KERNEL_NAME=.*/KERNEL_NAME=${_kernelname}/" \
-  #  -e  "s/KERNEL_VERSION=.*/KERNEL_VERSION=${_kernver}/" \
-  #  -i "${startdir}/linux.install"
-   sed \
-    -e "1s|'linux.*'|'${pkgbase}'|" \
-    -e "s|ALL_kver=.*|ALL_kver=\"/boot/vmlinuz-${pkgbase}\"|" \
-    -e "s|default_image=.*|default_image=\"/boot/initramfs-${pkgbase}.img\"|" \
-    -e "s|fallback_image=.*|fallback_image=\"/boot/initramfs-${pkgbase}-fallback.img\"|" \
-    -i "${pkgdir}/etc/mkinitcpio.d/${pkgbase}.preset"
 
   # remove build and source links
   rm -f "${pkgdir}"/lib/modules/${_kernver}/{source,build}
@@ -519,7 +503,7 @@ package_linux-pf() {
   mkdir -p "${pkgdir}/usr"
   mv "$pkgdir/lib" "$pkgdir/usr"
   # add vmlinux
-  install -D -m644 vmlinux "${pkgdir}/usr/lib/modules/build/${_kernver}/vmlinux"
+  install -D -m644 vmlinux "${pkgdir}/usr/lib/modules/${_kernver}/build/vmlinux"
 
 # end c/p
 
@@ -669,16 +653,39 @@ package_linux-pf-headers() {
   [[ -e version.h ]] || ln -s ../generated/uapi/linux/version.h
   
 }
+package_linux-pf-preset-default()
+{
+  pkgname=linux-pf-preset-default
+  provides=( "linux-pf-preset=$pkgver")
+  pkgdesc="Linux-pf default preset"
+  install=linux.install
+  depends=("linux-pf=$pkgver")
+  backup=("etc/mkinitcpio.d/${pkgbase}.preset")
 
+  # install fallback mkinitcpio.conf file and preset file for kernel
+  install -D -m644 "${srcdir}/linux.preset" "${pkgdir}/etc/mkinitcpio.d/${pkgbase}.preset"
+
+  # set correct depmod command for install
+  #sed \
+  #  -e  "s/KERNEL_NAME=.*/KERNEL_NAME=${_kernelname}/" \
+  #  -e  "s/KERNEL_VERSION=.*/KERNEL_VERSION=${_kernver}/" \
+  #  -i "${startdir}/linux.install"
+   sed \
+    -e "1s|'linux.*'|'${pkgbase}'|" \
+    -e "s|ALL_kver=.*|ALL_kver=\"/boot/vmlinuz-${pkgbase}\"|" \
+    -e "s|default_image=.*|default_image=\"/boot/initramfs-${pkgbase}.img\"|" \
+    -e "s|fallback_image=.*|fallback_image=\"/boot/initramfs-${pkgbase}-fallback.img\"|" \
+    -i "${pkgdir}/etc/mkinitcpio.d/${pkgbase}.preset"
+}
 # Work around the AUR parser
 pkgdesc="Linux kernel and modules with the pf-kernel patch [-ck patchset (BFS included), TuxOnIce, BFQ] and uksm"
 
 # makepkg -g >>PKGBUILD
 sha256sums=('5190c3d1209aeda04168145bf50569dc0984f80467159b1dc50ad731e3285f10'
-            'f935f7a8c796d1d08dbf34d4647ef914776d07b7829eaf6d6eebf5db6016cd90'
-            '794ddc5347f6e739cc95a8c078bb0ea4e3e7a57baa364476613cded19becff62'
+            'eab02de671adbcb606b4ba6b713e9b999116257baf53dd33d8e1c79a934a9d0c'
+            '320c34cea238a4a003a919ba24d62498c1ed6d51e87156792530213d933cbd95'
             '82d660caa11db0cd34fd550a049d7296b4a9dcd28f2a50c81418066d6e598864'
             '1256b241cd477b265a3c2d64bdc19ffe3c9bbcee82ea3994c590c2c76e767d99'
             '01a6d59a55df1040127ced0412f44313b65356e3c680980210593ee43f2495aa'
-            '7bddfa90731de5f40fdb9354ea7f414313bb4a84dcd6f02bb70c3d0f59dccd3c'
+            'SKIP'
             '16f601b5b5d1d74230403eaf331f716c65f0b36b9b5a37cdcdf51c30ea19e341')
