@@ -10,7 +10,7 @@ _minor=7
 _basekernel=${_major}.${_minor}
 _srcname=linux-${_major}.${_minor}
 pkgbase=linux-pf
-_pfrel=4
+_pfrel=5
 _kernelname=-pf
 _pfpatchhome="http://pf.natalenko.name/sources/${_basekernel}/"
 _pfpatchname="patch-${_basekernel}${_kernelname}${_pfrel}"
@@ -83,7 +83,7 @@ source=("ftp://www.kernel.org/pub/linux/kernel/v${_major}.x/linux-${_basekernel}
 	'change-default-console-loglevel.patch'
 	'ubuntu-unprivileged-overlayfs.patch'
 	"${_pfpatchhome}${_pfpatchname}.xz"	# the -pf patchset
-        "https://raw.githubusercontent.com/dolohow/uksm/master/uksm-$_major.$_minor.patch"
+        "uksm-$_major.$_minor.patch"::'http://kerneldedup.org/download/uksm/0.1.2.5/uksm-0.1.2.5-for-v4.7.patch'
        )
 # 	'cx23885_move_CI_AC_registration_to_a_separate_function.patch'     
 
@@ -324,7 +324,7 @@ package_linux-pf() {
 	    'nvidia-beta-all: NVIDIA drivers for all installed kernels'
 	    'modprobed-db: Keeps track of EVERY kernel module that has ever been probed. Useful for make localmodconfig.')
  #provides=(${pkgbase}=${_basekernel})	# for $pkgname-optimized
- provides=(${pkgbase}=${_basekernel})
+ provides=(${pkgbase}=$pkgver)
  # below 'provides' is for when you have no other kernel (which is a bad idea anyway)
  # provides=(${pkgbase}=${_basekernel} 'linux=${pkgver}')
  # If generic build, then conflict with all optimized ones
@@ -682,10 +682,10 @@ pkgdesc="Linux kernel and modules with the pf-kernel patch [-ck patchset (BFS in
 
 # makepkg -g >>PKGBUILD
 sha256sums=('5190c3d1209aeda04168145bf50569dc0984f80467159b1dc50ad731e3285f10'
-            'eab02de671adbcb606b4ba6b713e9b999116257baf53dd33d8e1c79a934a9d0c'
-            '320c34cea238a4a003a919ba24d62498c1ed6d51e87156792530213d933cbd95'
+            '3fbc110417047ca9c4fe2e03800767752d61fc63ab928bee9b571940f36c783a'
+            'e27b5966f535561e649a92e1f31dff2141ec2270d15f59ca78ecd40d53940eac'
             '82d660caa11db0cd34fd550a049d7296b4a9dcd28f2a50c81418066d6e598864'
             '1256b241cd477b265a3c2d64bdc19ffe3c9bbcee82ea3994c590c2c76e767d99'
             '01a6d59a55df1040127ced0412f44313b65356e3c680980210593ee43f2495aa'
-            'SKIP'
+            'd5d95c8a224ef096b217bf94154458668ba283047a7f11e55700df31df45c7f1'
             '16f601b5b5d1d74230403eaf331f716c65f0b36b9b5a37cdcdf51c30ea19e341')

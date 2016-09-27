@@ -1,6 +1,6 @@
 pkgbase = linux-pf
 	pkgdesc = Linux kernel and modules with the pf-kernel patch [-ck patchset (BFS included), TuxOnIce, BFQ] and uksm
-	pkgver = 4.7.2
+	pkgver = 4.7.5
 	pkgrel = 1
 	url = http://pf.natalenko.name/
 	arch = i686
@@ -19,15 +19,15 @@ pkgbase = linux-pf
 	source = linux.preset
 	source = change-default-console-loglevel.patch
 	source = ubuntu-unprivileged-overlayfs.patch
-	source = http://pf.natalenko.name/sources/4.7/patch-4.7-pf2.xz
-	source = https://raw.githubusercontent.com/dolohow/uksm/master/uksm-4.7.patch
+	source = http://pf.natalenko.name/sources/4.7/patch-4.7-pf5.xz
+	source = uksm-4.7.patch::http://kerneldedup.org/download/uksm/0.1.2.5/uksm-0.1.2.5-for-v4.7.patch
 	sha256sums = 5190c3d1209aeda04168145bf50569dc0984f80467159b1dc50ad731e3285f10
-	sha256sums = eab02de671adbcb606b4ba6b713e9b999116257baf53dd33d8e1c79a934a9d0c
-	sha256sums = 320c34cea238a4a003a919ba24d62498c1ed6d51e87156792530213d933cbd95
+	sha256sums = 3fbc110417047ca9c4fe2e03800767752d61fc63ab928bee9b571940f36c783a
+	sha256sums = e27b5966f535561e649a92e1f31dff2141ec2270d15f59ca78ecd40d53940eac
 	sha256sums = 82d660caa11db0cd34fd550a049d7296b4a9dcd28f2a50c81418066d6e598864
 	sha256sums = 1256b241cd477b265a3c2d64bdc19ffe3c9bbcee82ea3994c590c2c76e767d99
 	sha256sums = 01a6d59a55df1040127ced0412f44313b65356e3c680980210593ee43f2495aa
-	sha256sums = SKIP
+	sha256sums = d5d95c8a224ef096b217bf94154458668ba283047a7f11e55700df31df45c7f1
 	sha256sums = 16f601b5b5d1d74230403eaf331f716c65f0b36b9b5a37cdcdf51c30ea19e341
 
 pkgname = linux-pf
@@ -45,7 +45,7 @@ pkgname = linux-pf
 	optdepends = nvidia-pf: NVIDIA drivers for linux-pf
 	optdepends = nvidia-beta-all: NVIDIA drivers for all installed kernels
 	optdepends = modprobed-db: Keeps track of EVERY kernel module that has ever been probed. Useful for make localmodconfig.
-	provides = linux-pf=4.7
+	provides = linux-pf=4.7.5
 	conflicts = linux-pf
 	conflicts = kernel26-pf
 	replaces = kernel26-pf
@@ -59,7 +59,7 @@ pkgname = linux-pf-headers
 pkgname = linux-pf-preset-default
 	pkgdesc = Linux-pf default preset
 	install = linux.install
-	depends = linux-pf=4.7.2
-	provides = linux-pf-preset=4.7.2
+	depends = linux-pf=4.7.5
+	provides = linux-pf-preset=4.7.5
 	backup = etc/mkinitcpio.d/linux-pf.preset
 
