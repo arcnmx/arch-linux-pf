@@ -4,13 +4,13 @@
 # Some lines from  kernel26-bfs and kernel26-ck
 # Credits to respective maintainers
 _major=4
-_minor=7
+_minor=8
 #_patchlevel=0
 #_subversion=1
 _basekernel=${_major}.${_minor}
 _srcname=linux-${_major}.${_minor}
 pkgbase=linux-pf
-_pfrel=6
+_pfrel=1
 _kernelname=-pf
 _pfpatchhome="http://pf.natalenko.name/sources/${_basekernel}/"
 _pfpatchname="patch-${_basekernel}${_kernelname}${_pfrel}"
@@ -83,7 +83,7 @@ source=("ftp://www.kernel.org/pub/linux/kernel/v${_major}.x/linux-${_basekernel}
 	'change-default-console-loglevel.patch'
 	'ubuntu-unprivileged-overlayfs.patch'
 	"${_pfpatchhome}${_pfpatchname}.xz"	# the -pf patchset
-        "uksm-$_major.$_minor.patch"::'http://kerneldedup.org/download/uksm/0.1.2.5/uksm-0.1.2.5-for-v4.7.patch'
+        "uksm-$_major.$_minor.patch"::"http://kerneldedup.org/download/uksm/0.1.2.5/uksm-0.1.2.5-for-v$_major.$_minor.patch"
        )
 # 	'cx23885_move_CI_AC_registration_to_a_separate_function.patch'     
 
@@ -94,12 +94,6 @@ prepare() {
 
   patch -Np1 -i "${srcdir}/ubuntu-unprivileged-overlayfs.patch"
   
-  # Interactive governor patch
-  # broken for now
-  #   msg "Interactice CPU governor patch"
-  #   mv ${srcdir}/gist*/gistfile1.diff ${srcdir}
-  #   patch -Np1 < ${srcdir}/gistfile1.diff
-
   # linux-ARCH patches
 
   # add latest fixes from stable queue, if needed
@@ -514,15 +508,11 @@ package_linux-pf() {
 
 ### package_linux-pf-headers
 package_linux-pf-headers() {
+  pkgname=${pkgbase}-headers
   pkgdesc="Header files and scripts for building modules for linux-pf kernel."
   depends=('linux-pf') 
-  conflicts=( ${_conflicts[@]} )
-  for _cpusuffix in $_CPUSUFFIXES ; do
-    conflicts+=(linux-pf-headers-$_cpusuffix)
-  done
-  [[ ${cpuopt} ]] && pkgname=${pkgname}-${cpuopt} && depends=${depends}-${cpuopt}
-  [[ ${cpuoptdesc} ]] && pkgdesc=${pkgdesc}${cpuoptdesc}
-  provides=('linux-pf-headers')
+  conflicts=( "${pkgbase}") 
+  provides=( "${pkgbase}-headers=$pkver" )
   cd "${srcdir}/linux-${_basekernel}"
 # c/p from linux-ARCH
 
@@ -681,11 +671,11 @@ package_linux-pf-preset-default()
 pkgdesc="Linux kernel and modules with the pf-kernel patch [-ck patchset (BFS included), TuxOnIce, BFQ] and uksm"
 
 # makepkg -g >>PKGBUILD
-sha256sums=('5190c3d1209aeda04168145bf50569dc0984f80467159b1dc50ad731e3285f10'
-            '3fbc110417047ca9c4fe2e03800767752d61fc63ab928bee9b571940f36c783a'
-            'e27b5966f535561e649a92e1f31dff2141ec2270d15f59ca78ecd40d53940eac'
+sha256sums=('3e9150065f193d3d94bcf46a1fe9f033c7ef7122ab71d75a7fb5a2f0c9a7e11a'
+            'ca3b77afc72c4ee35d44d8f6141b955f847048e9af75699d3de7cdcaf8c5a9a5'
+            'a5e2bdd7a18f4dff59d41595bd7e0b00dfd789597726d7419ad7108146ae5f4a'
             '82d660caa11db0cd34fd550a049d7296b4a9dcd28f2a50c81418066d6e598864'
             '1256b241cd477b265a3c2d64bdc19ffe3c9bbcee82ea3994c590c2c76e767d99'
             '01a6d59a55df1040127ced0412f44313b65356e3c680980210593ee43f2495aa'
-            'bb6c5b17a6a6eecd52bc1cdb6e28c039098639f781c7fbd1b481fda8298c325c'
-            '16f601b5b5d1d74230403eaf331f716c65f0b36b9b5a37cdcdf51c30ea19e341')
+            '55b8fb404a8d9403e96db77d4b83826e1e549c685f09c3ab6bf5556eb6e7df86'
+            'ddda9d1de5bf62d23cc0bf38fed9526f3d2f2e236707c26fda3e3042f853bb8c')
