@@ -1,7 +1,7 @@
 pkgbase = linux-pf
 	pkgdesc = Linux kernel and modules with the pf-kernel patch [-ck patchset (BFS included), TuxOnIce, BFQ] and uksm
 	pkgver = 4.8.1
-	pkgrel = 2
+	pkgrel = 4
 	url = http://pf.natalenko.name/
 	arch = i686
 	arch = x86_64
