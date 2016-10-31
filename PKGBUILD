@@ -10,7 +10,7 @@ _minor=8
 _basekernel=${_major}.${_minor}
 _srcname=linux-${_major}.${_minor}
 pkgbase=linux-pf
-_pfrel=4
+_pfrel=5
 _kernelname=-pf
 _pfpatchhome="http://pf.natalenko.name/sources/${_basekernel}/"
 _pfpatchname="patch-${_basekernel}${_kernelname}${_pfrel}"
@@ -677,10 +677,10 @@ pkgdesc="Linux kernel and modules with the pf-kernel patch [-ck patchset (BFS in
 
 # makepkg -g >>PKGBUILD
 sha256sums=('3e9150065f193d3d94bcf46a1fe9f033c7ef7122ab71d75a7fb5a2f0c9a7e11a'
-            '4b196eea7112638da532be46a302d19e7db1041027859f0f12a836a910beeb68'
-            'd82c9be314a1561f2105f3bb567728d3601ae125cd86db50f7e8586580f73464'
+            'f667bbad0bf13c519b392d055a4aa8986e8b5ce60944f0ec6ec3bb2b2c9f043f'
+            '488cd21d4d02b3081856c85ae2d92d2f89c29ff08a6fb42cfcc516f5ae6d8ca5'
             '82d660caa11db0cd34fd550a049d7296b4a9dcd28f2a50c81418066d6e598864'
             '1256b241cd477b265a3c2d64bdc19ffe3c9bbcee82ea3994c590c2c76e767d99'
             '01a6d59a55df1040127ced0412f44313b65356e3c680980210593ee43f2495aa'
-            '1a42c750799901a09bd06b33dd80a1ca81a7c01a0e9cfa51abf02c3d54b62d6b'
+            '362ea39bea1c8e0033f691c094c1d91200ec20ab066addb554514bd99ce248dc'
             'ddda9d1de5bf62d23cc0bf38fed9526f3d2f2e236707c26fda3e3042f853bb8c')
