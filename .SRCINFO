@@ -1,7 +1,7 @@
 pkgbase = linux-pf
 	pkgdesc = Linux kernel and modules with the pf-kernel patch [-ck patchset (BFS included), TuxOnIce, BFQ] and uksm
-	pkgver = 4.8.7
-	pkgrel = 2
+	pkgver = 4.8.8
+	pkgrel = 1
 	url = http://pf.natalenko.name/
 	arch = i686
 	arch = x86_64
@@ -20,16 +20,16 @@ pkgbase = linux-pf
 	source = linux.preset
 	source = change-default-console-loglevel.patch
 	source = ubuntu-unprivileged-overlayfs.patch
-	source = http://pf.natalenko.name/sources/4.8/patch-4.8-pf7.xz
+	source = http://pf.natalenko.name/sources/4.8/patch-4.8-pf8.xz
 	source = uksm-4.8.patch::http://kerneldedup.org/download/uksm/0.1.2.5/uksm-0.1.2.5-for-v4.8.patch
 	source = 99-linux-pf.hook
 	sha256sums = 3e9150065f193d3d94bcf46a1fe9f033c7ef7122ab71d75a7fb5a2f0c9a7e11a
-	sha256sums = 3f1dd3cca72f2a2d5ba3a22cf10c21dc8221fa7109c689fcb4d2e76601109139
-	sha256sums = 5900937af127793659002ec2ab5bc4bc4e825054217609b2641ae364bc84bf13
+	sha256sums = f691af1934d1febbc05c84961f078c0c2ff99ae6f69905155c76d6cfd2417665
+	sha256sums = d06d9daa279bcc89401f738199fdd9f3c58b795eb78cb400b82ff582399c8e19
 	sha256sums = 82d660caa11db0cd34fd550a049d7296b4a9dcd28f2a50c81418066d6e598864
 	sha256sums = 1256b241cd477b265a3c2d64bdc19ffe3c9bbcee82ea3994c590c2c76e767d99
 	sha256sums = 01a6d59a55df1040127ced0412f44313b65356e3c680980210593ee43f2495aa
-	sha256sums = 83c67ff48689bb083e44b9cee1c5b67226bf887589081548e81d93a71a6dcf70
+	sha256sums = 2737a15ef112095abe5e6bf3c047d553c1ee2f6022d1414294a76212cf967108
 	sha256sums = ddda9d1de5bf62d23cc0bf38fed9526f3d2f2e236707c26fda3e3042f853bb8c
 	sha256sums = df07e00e8581fe282a5b92be9ee9bb37910eae3d2cc43eeb41df736b9f531f02
 
@@ -48,7 +48,7 @@ pkgname = linux-pf
 	optdepends = nvidia-pf: NVIDIA drivers for linux-pf
 	optdepends = nvidia-beta-all: NVIDIA drivers for all installed kernels
 	optdepends = modprobed-db: Keeps track of EVERY kernel module that has ever been probed. Useful for make localmodconfig.
-	provides = linux-pf=4.8.7
+	provides = linux-pf=4.8.8
 	conflicts = linux-pf
 	conflicts = kernel26-pf
 	replaces = kernel26-pf
@@ -56,13 +56,13 @@ pkgname = linux-pf
 pkgname = linux-pf-headers
 	pkgdesc = Header files and scripts for building modules for linux-pf kernel.
 	depends = linux-pf
-	provides = linux-pf-headers=4.8.7
+	provides = linux-pf-headers=4.8.8
 	conflicts = linux-pf-headers
 
 pkgname = linux-pf-preset-default
 	pkgdesc = Linux-pf default preset
 	install = linux.install
-	depends = linux-pf=4.8.7
-	provides = linux-pf-preset=4.8.7
+	depends = linux-pf=4.8.8
+	provides = linux-pf-preset=4.8.8
 	backup = etc/mkinitcpio.d/linux-pf.preset
 
