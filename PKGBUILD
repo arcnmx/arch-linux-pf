@@ -10,7 +10,7 @@ _minor=10
 _basekernel=${_major}.${_minor}
 _srcname=linux-${_major}.${_minor}
 pkgbase=linux-pf
-_pfrel=1
+_pfrel=2
 _kernelname=-pf
 _pfpatchhome="http://pf.natalenko.name/sources/${_basekernel}/"
 _pfpatchname="patch-${_basekernel}${_kernelname}${_pfrel}"
@@ -71,20 +71,19 @@ _BATCH_MODE=n
 pkgname=('linux-pf')
 true && pkgname=('linux-pf' 'linux-pf-headers' 'linux-pf-preset-default')
 pkgver=${_basekernel}.${_pfrel}
-pkgrel=3
+pkgrel=1
 arch=('i686' 'x86_64')
 url="http://pf.natalenko.name/"
 license=('GPL2')
 options=('!strip')
 makedepends=('git' 'xmlto' 'docbook-xsl' 'xz' 'bc' 'kmod' 'elfutils')
-source=("ftp://www.kernel.org/pub/linux/kernel/v${_major}.x/linux-${_basekernel}.tar.xz"
+source=("https://www.kernel.org/pub/linux/kernel/v${_major}.x/linux-${_basekernel}.tar.xz"
 	'config' 'config.x86_64'		# the main kernel config files
 	'linux.preset'			        # standard config files for mkinitcpio ramdisk
 	'ubuntu-unprivileged-overlayfs.patch'
 	"${_pfpatchhome}${_pfpatchname}.xz"	# the -pf patchset
-        "uksm-$_major.$_minor.patch"
-        "99-linux-pf.hook"
-        'fix_dccp_freeing_skb_too_early.patch'
+        "uksm-$_major.$_minor.patch"::"http://kerneldedup.org/download/uksm/0.1.2.6/uksm-0.1.2.6-for-v$_major.$_minor.patch"
+        "90-linux-pf.hook"
        )
 # 	'cx23885_move_CI_AC_registration_to_a_separate_function.patch'     
 
@@ -100,9 +99,6 @@ prepare() {
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
   
-  
-
-  patch -Rp1 -i "$srcdir"/'fix_dccp_freeing_skb_too_early.patch'
   # end linux-ARCH patches
 
 
@@ -658,7 +654,7 @@ package_linux-pf-preset-default()
   # install fallback mkinitcpio.conf file and preset file for kernel
   install -D -m644 "${srcdir}/linux.preset" "${pkgdir}/etc/mkinitcpio.d/${pkgbase}.preset"
 
-  install -D -m644 "${srcdir}/99-linux-pf.hook" "${pkgdir}/usr/share/libalpm/hooks/99-linux-pf.hook"
+  install -D -m644 "${srcdir}/90-linux-pf.hook" "${pkgdir}/usr/share/libalpm/hooks/90-linux-pf.hook"
   
   # set correct depmod command for install
   #sed \
@@ -681,7 +677,6 @@ sha256sums=('3c95d9f049bd085e5c346d2c77f063b8425f191460fcd3ae9fe7e94e0477dc4b'
             'e42bd1bcbb98cee0716f27b2993d17a68bd077299445ffeed93e58b883066db3'
             '82d660caa11db0cd34fd550a049d7296b4a9dcd28f2a50c81418066d6e598864'
             '01a6d59a55df1040127ced0412f44313b65356e3c680980210593ee43f2495aa'
-            '9853580e534d6e3627b3161d7ee19d8f6548129eb937e2ba3329555fcb6087bb'
-            '8d4213bec36cbc35148a738f302da478049a70fefbfa01ba2a9bc4518a72c8a8'
-            'df07e00e8581fe282a5b92be9ee9bb37910eae3d2cc43eeb41df736b9f531f02'
-            'f307c35625c0543d351d4f56bed1ec6726fd90b92b9c74b5bfd40ee77fd1946e')
+            '986c8815cd68e6f1502a63de92b08db083123c7705c51c7fcd1215043cefa045'
+            '6752da3c575963f4c95b1df66d8a6fd96d47b7b88d0cf2b0b002dc23d6f8833b'
+            'df07e00e8581fe282a5b92be9ee9bb37910eae3d2cc43eeb41df736b9f531f02')
