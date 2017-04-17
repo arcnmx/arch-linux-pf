@@ -1,7 +1,7 @@
 pkgbase = linux-pf
 	pkgdesc = Linux kernel and modules with the pf-kernel patch [-ck patchset (BFS included), TuxOnIce, BFQ] and uksm
-	pkgver = 4.10.2
-	pkgrel = 1
+	pkgver = 4.10.3
+	pkgrel = 2
 	url = http://pf.natalenko.name/
 	arch = i686
 	arch = x86_64
@@ -19,7 +19,7 @@ pkgbase = linux-pf
 	source = config.x86_64
 	source = linux.preset
 	source = ubuntu-unprivileged-overlayfs.patch
-	source = http://pf.natalenko.name/sources/4.10/patch-4.10-pf2.xz
+	source = http://pf.natalenko.name/sources/4.10/patch-4.10-pf3.xz
 	source = uksm-4.10.patch::http://kerneldedup.org/download/uksm/0.1.2.6/uksm-0.1.2.6-for-v4.10.patch
 	source = 90-linux-pf.hook
 	sha256sums = 3c95d9f049bd085e5c346d2c77f063b8425f191460fcd3ae9fe7e94e0477dc4b
@@ -27,7 +27,7 @@ pkgbase = linux-pf
 	sha256sums = e42bd1bcbb98cee0716f27b2993d17a68bd077299445ffeed93e58b883066db3
 	sha256sums = 82d660caa11db0cd34fd550a049d7296b4a9dcd28f2a50c81418066d6e598864
 	sha256sums = 01a6d59a55df1040127ced0412f44313b65356e3c680980210593ee43f2495aa
-	sha256sums = 986c8815cd68e6f1502a63de92b08db083123c7705c51c7fcd1215043cefa045
+	sha256sums = d38323bb91b6f2b04d1d51247bbfbab57daabc22ad71c0e195f688679db2f7e6
 	sha256sums = 6752da3c575963f4c95b1df66d8a6fd96d47b7b88d0cf2b0b002dc23d6f8833b
 	sha256sums = df07e00e8581fe282a5b92be9ee9bb37910eae3d2cc43eeb41df736b9f531f02
 
@@ -46,7 +46,7 @@ pkgname = linux-pf
 	optdepends = nvidia-pf: NVIDIA drivers for linux-pf
 	optdepends = nvidia-beta-all: NVIDIA drivers for all installed kernels
 	optdepends = modprobed-db: Keeps track of EVERY kernel module that has ever been probed. Useful for make localmodconfig.
-	provides = linux-pf=4.10.2
+	provides = linux-pf=4.10.3
 	conflicts = linux-pf
 	conflicts = kernel26-pf
 	replaces = kernel26-pf
@@ -54,13 +54,13 @@ pkgname = linux-pf
 pkgname = linux-pf-headers
 	pkgdesc = Header files and scripts for building modules for linux-pf kernel.
 	depends = linux-pf
-	provides = linux-pf-headers=4.10.2
+	provides = linux-pf-headers=4.10.3
 	conflicts = linux-pf-headers
 
 pkgname = linux-pf-preset-default
 	pkgdesc = Linux-pf default preset
 	install = linux.install
-	depends = linux-pf=4.10.2
-	provides = linux-pf-preset=4.10.2
+	depends = linux-pf=4.10.3
+	provides = linux-pf-preset=4.10.3
 	backup = etc/mkinitcpio.d/linux-pf.preset
 
