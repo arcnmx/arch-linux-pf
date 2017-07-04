@@ -10,7 +10,7 @@ _minor=11
 _basekernel=${_major}.${_minor}
 _srcname=linux-${_major}.${_minor}
 pkgbase=linux-pf
-_pfrel=3
+_pfrel=5
 _kernelname=-pf
 _pfpatchhome="http://pf.natalenko.name/sources/${_basekernel}/"
 _pfpatchname="patch-${_basekernel}${_kernelname}${_pfrel}"
@@ -71,7 +71,7 @@ _BATCH_MODE=n
 pkgname=('linux-pf')
 true && pkgname=('linux-pf' 'linux-pf-headers' 'linux-pf-preset-default')
 pkgver=${_basekernel}.${_pfrel}
-pkgrel=3
+pkgrel=1
 arch=('i686' 'x86_64')
 url="http://pf.natalenko.name/"
 license=('GPL2')
@@ -85,6 +85,9 @@ source=("https://www.kernel.org/pub/linux/kernel/v${_major}.x/linux-${_basekerne
    #     "git+$_aufs3#branch=aufs4.$_minor"
         "uksm-$_major.$_minor.patch"::"http://kerneldedup.org/download/uksm/0.1.2.6/uksm-0.1.2.6-for-v$_major.$_minor.patch"
         "90-linux-pf.hook"
+        CVE-2017-1000364.mm-larger-stack-guard-gap-between-vmas.patch
+        CVE-2017-1000364.mm-fix-new-crash-in-unmapped_area_topdown.patch
+        CVE-2017-1000364.fixup.allow-stack-to-grow-up-to-address-space-limit.patch
        )
 # 	'cx23885_move_CI_AC_registration_to_a_separate_function.patch'     
 
@@ -127,7 +130,11 @@ prepare() {
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
-  
+
+  # security patches
+  patch -p1 < "${srcdir}/CVE-2017-1000364.mm-larger-stack-guard-gap-between-vmas.patch"
+  patch -p1 < "${srcdir}/CVE-2017-1000364.mm-fix-new-crash-in-unmapped_area_topdown.patch"
+  patch -p1 < "${srcdir}/CVE-2017-1000364.fixup.allow-stack-to-grow-up-to-address-space-limit.patch"
   # end linux-ARCH patches
 
 
@@ -558,7 +565,7 @@ package_linux-pf-headers() {
   mkdir -p "${pkgdir}/usr/lib/modules/${_kernver}/build/include"
 
   for i in acpi asm-generic config crypto drm generated keys linux math-emu \
-    media net pcmcia scsi soc sound trace uapi video xen; do
+    media net pcmcia rdma scsi soc sound trace uapi video xen; do
     cp -a include/${i} "${pkgdir}/usr/lib/modules/${_kernver}/build/include/"
   done
 
@@ -702,10 +709,13 @@ pkgdesc="Linux kernel and modules with the pf-kernel patch [-ck patchset (BFS in
 
 # makepkg -g >>PKGBUILD
 sha256sums=('b67ecafd0a42b3383bf4d82f0850cbff92a7e72a215a6d02f42ddbafcf42a7d6'
-            'c2d2327ad9a78d06a96efdeed18575e433e077261ff2e1e299d038d10805849e'
-            '352323987c353bd9347b33b59053587d41a9b06de7c734ad31ebb656fcb2ef73'
+            '832a6cef648a311c5ca65aad59648ef3449baa80aa29adb24b0be65cae9a140e'
+            '153c5d0676293a77baa22353208f792a3690c3af8d54c82056c907e7734db664'
             '82d660caa11db0cd34fd550a049d7296b4a9dcd28f2a50c81418066d6e598864'
             '01a6d59a55df1040127ced0412f44313b65356e3c680980210593ee43f2495aa'
-            '54ac2cd29f7ecd2a4118100303a959dd2ec415bddbbc56f0072ae6fed71f42cc'
+            'd6c712ec5b8eae85988876dbe184edae1ca03d95906f7673e6dd8aba8d33d10d'
             'bba97e70a69561e026ef8898c441fde136204d89c974d28a50f4542f4df4c52f'
-            'df07e00e8581fe282a5b92be9ee9bb37910eae3d2cc43eeb41df736b9f531f02')
+            'df07e00e8581fe282a5b92be9ee9bb37910eae3d2cc43eeb41df736b9f531f02'
+            'e1b6a237894fb9e7bf142eb97b5e53c2e46a15ff69ef11593007f254b9faa160'
+            'beede1721c92bae39049be5bcb30e4274406dc53c41436bf75bd44238ee8efe4'
+            'de9c4f81b51c497de930b365f63633a005e3b8bcfbb21be93fe0cbab84ed9f76')
