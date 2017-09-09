@@ -695,10 +695,10 @@ package_linux-pf-preset-default()
 pkgdesc="Linux kernel and modules with the pf-kernel patch [-ck patchset (BFS included), TuxOnIce, BFQ] and uksm"
 
 # makepkg -g >>PKGBUILD
-md5sums=('ab1a2abc6f37b752dd2595338bec4e78'
-         '67cbbacd1b45f6d98e9b77ce1004a7ac'
-         'e5a12ea58098a97b52d06c58d61e7141'
-         '408a033f1332317f312617704edf9f75'
-         '6ad1a637517c603fc45814e1f8d8b057'
-         'da1e5c3947ea2d0373ea7b95636632d8'
-         'd5f9f6c2acf4f54e27a2e780d234cdc1')
+sha256sums=('2db3d6066c3ad93eb25b973a3d2951e022a7e975ee2fa7cbe5bddf84d9a49a2c'
+            'b6057e1b5cd22dc287d7de9efc46e4e1a904c5c22c3913618a0cfd1d65cc9c87'
+            '083d87a728a560ba3b74a17e3e4903fc5de82e5dc8670645284394e07fbc34a5'
+            '82d660caa11db0cd34fd550a049d7296b4a9dcd28f2a50c81418066d6e598864'
+            '01a6d59a55df1040127ced0412f44313b65356e3c680980210593ee43f2495aa'
+            '7b0b839b736b45021664672a02a52b918551e39e2f472f62170dee91a352536b'
+            'df07e00e8581fe282a5b92be9ee9bb37910eae3d2cc43eeb41df736b9f531f02')
