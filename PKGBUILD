@@ -10,10 +10,11 @@ _minor=13
 _basekernel=${_major}.${_minor}
 _srcname=linux-${_major}.${_minor}
 pkgbase=linux-pf
-_pfrel=3
+_pfrel=13
 _kernelname=-pf
-_pfpatchhome="http://pf.natalenko.name/sources/${_basekernel}/"
-_pfpatchname="patch-${_basekernel}${_kernelname}${_pfrel}"
+_pfpatchhome="https://github.com/pfactum/pf-kernel/compare"
+_pfpatchname="v$_major.$_minor...v$_major.$_minor-pf$_pfrel.diff"
+_aufs3="https://github.com/sfjro/aufs4-standalone"
 _CPUSUFFIXES_KBUILD=(
   CORE2 K7 K8 K10 BARCELONA BOBCAT BULLDOZER PILEDRIVER PSC
   ATOM PENTIUMII PENTIUMIII PENTIUMM PENTIUM4 NEHALEM SANDYBRIDGE
@@ -81,7 +82,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v${_major}.x/linux-${_basekerne
 	'config.i686' 'config.x86_64'		# the main kernel config files
 	'linux.preset'			        # standard config files for mkinitcpio ramdisk
 	'ubuntu-unprivileged-overlayfs.patch'
-	"${_pfpatchhome}${_pfpatchname}.xz"	# the -pf patchset
+	"${_pfpatchhome}/${_pfpatchname}"	# the -pf patchset
    #     "git+$_aufs3#branch=aufs4.$_minor"
         "90-linux-pf.hook"
        )
@@ -695,10 +696,10 @@ package_linux-pf-preset-default()
 pkgdesc="Linux kernel and modules with the pf-kernel patch [-ck patchset (BFS included), TuxOnIce, BFQ] and uksm"
 
 # makepkg -g >>PKGBUILD
-sha256sums=('2db3d6066c3ad93eb25b973a3d2951e022a7e975ee2fa7cbe5bddf84d9a49a2c'
-            'b6057e1b5cd22dc287d7de9efc46e4e1a904c5c22c3913618a0cfd1d65cc9c87'
-            '083d87a728a560ba3b74a17e3e4903fc5de82e5dc8670645284394e07fbc34a5'
-            '82d660caa11db0cd34fd550a049d7296b4a9dcd28f2a50c81418066d6e598864'
-            '01a6d59a55df1040127ced0412f44313b65356e3c680980210593ee43f2495aa'
-            '16b257d78f65ad397f01d5961aa4216a6bce7bdfae67d9ed98a24e975f9c82e8'
-            'df07e00e8581fe282a5b92be9ee9bb37910eae3d2cc43eeb41df736b9f531f02')
+md5sums=('ab1a2abc6f37b752dd2595338bec4e78'
+         '0a0274fca595a20d1109308bfdb66aef'
+         '9d663d50aa1d7209e15404a93a8305e7'
+         '408a033f1332317f312617704edf9f75'
+         '6ad1a637517c603fc45814e1f8d8b057'
+         '3dbdc74f2195280254d7d66ca4355775'
+         'd5f9f6c2acf4f54e27a2e780d234cdc1')
